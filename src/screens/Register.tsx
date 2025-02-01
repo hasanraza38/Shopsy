@@ -11,7 +11,7 @@ const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/aut
 export default function Register() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    name: '',
+    userName: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -30,7 +30,7 @@ export default function Register() {
     try {
       setLoading(true)
       const response = await axios.post(API_URL, {
-        name: formData.name,
+        username: formData.userName,
         email: formData.email,
         password: formData.password
       })
@@ -69,13 +69,13 @@ export default function Register() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="userName">Username</Label>
               <Input
-                id="name"
-                name="name"
+                id="userName"
+                name="userName"
                 placeholder="John Doe"
                 required
-                value={formData.name}
+                value={formData.userName}
                 onChange={handleChange}
               />
             </div>
