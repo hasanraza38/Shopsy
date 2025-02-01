@@ -1,11 +1,11 @@
 import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "./Layout.jsx";
-// import Register from "./screens/register/Register.jsx";
-// import Dashboard from "./screens/dashboard/Dashboard.jsx";
-// import Login from "./screens/login/Login.jsx"
+import Home from "./screens/Home.js";
+import Login from "./screens/Login.js";
+import Register from "./screens/Register.js";
+import Dashboard from "./screens/Dashboard.js";
 
 const router = createBrowserRouter([
   {
@@ -14,22 +14,20 @@ const router = createBrowserRouter([
     children: [
       {
          path:'',
-         element: <App/>
+         element: <Home/>
       },
       {
         path: "/login",
-        element:<h1>login</h1>
+        element:<Login/>,
       },
       {
         path: '/register',
-        element:<h1>register</h1>
-        // element: <Register/>
+        element:<Register/>
 
       },
       {
         path: '/dashboard',
-        element:<h1>dashbord</h1>
-        // element: <Dashboard/>
+        element:<Dashboard/>,
       }
   ],
   },
@@ -37,7 +35,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <RouterProvider router={router}>
-    <App /> 
+    <Home/>
   </RouterProvider>
 );
 
