@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api//v1/auth/loginuser'
+const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/auth/loginuser'
 
 const Login = () => {
   const navigate = useNavigate()
