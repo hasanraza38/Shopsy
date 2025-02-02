@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 
 const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/auth/registeruser'
 
-export default function Register() {
+const Register = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     userName: '',
@@ -145,3 +145,5 @@ export default function Register() {
     </div>
   )
 }
+
+export default Register
