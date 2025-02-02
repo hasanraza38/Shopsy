@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
@@ -20,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-
+    
     if (!formData.email || !formData.password) {
       return setError('Please fill in all fields')
     }
@@ -33,7 +34,7 @@ const Login = () => {
       })
 
       if (response.status === 200) {
-        // Store token in localStorage
+        // Store token in localStorage or context
         localStorage.setItem('token', response.data.token)
         alert('Login successful! Redirecting to dashboard...')
         navigate('/dashboard')
