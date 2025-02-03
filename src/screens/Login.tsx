@@ -12,6 +12,7 @@ const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/aut
 const Login = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
+    userName:'',
     email: '',
     password: ''
   })
@@ -22,13 +23,14 @@ const Login = () => {
     e.preventDefault()
     setError('')
     
-    if (!formData.email || !formData.password) {
+    if (!formData.email || !formData.password || !formData.userName) {
       return setError('Please fill in all fields')
     }
 
     try {
       setLoading(true)
       const response = await axios.post(API_URL, {
+        username : formData.userName,
         email: formData.email,
         password: formData.password
       })
@@ -68,6 +70,19 @@ const Login = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="john@example.com"
+                required
+                value={formData.userName}
+                onChange={handleChange}
+              />
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input

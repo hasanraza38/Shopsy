@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router"
 
 const Home = () => {
+  const navigate = useNavigate()
 
-function click (){
-    console.log("button clicked");
-    
-}
 
 
 
@@ -15,7 +13,21 @@ function click (){
     <>
     <div className="flex justify-center items-center h-[100vh] gap-5">
         <h1>Home</h1>
-        <Button variant="outline" onClick={click}>Click</Button>
+        <Button 
+              variant="link" 
+              className="px-0"
+              onClick={() => navigate('/register')}
+            >
+              Register
+            </Button>
+
+            <Button 
+              variant="link" 
+              className="px-0"
+              onClick={() => navigate('/login')}
+            >
+              Login
+            </Button>
     </div>
     </>
     
