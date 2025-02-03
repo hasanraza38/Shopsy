@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
@@ -12,7 +11,7 @@ const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/aut
 const Login = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    userName:'',
+    userName: '',
     email: '',
     password: ''
   })
@@ -22,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    
+
     if (!formData.email || !formData.password || !formData.userName) {
       return setError('Please fill in all fields')
     }
@@ -30,7 +29,7 @@ const Login = () => {
     try {
       setLoading(true)
       const response = await axios.post(API_URL, {
-        username : formData.userName,
+        username: formData.userName,
         email: formData.email,
         password: formData.password
       })
@@ -70,7 +69,7 @@ const Login = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+            <div className="space-y-2">
               <Label htmlFor="userName">Username</Label>
               <Input
                 id="userName"
@@ -112,8 +111,8 @@ const Login = () => {
               <div className="text-red-500 text-sm">{error}</div>
             )}
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full"
               disabled={loading}
             >
@@ -123,8 +122,8 @@ const Login = () => {
 
           <div className="mt-4 text-center text-sm">
             Don't have an account?{' '}
-            <Button 
-              variant="link" 
+            <Button
+              variant="link"
               className="px-0"
               onClick={() => navigate('/register')}
             >

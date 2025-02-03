@@ -7,30 +7,38 @@ const Home = () => {
 
 
 
-    
+
   return (
 
     <>
-    <div className="flex justify-center items-center h-[100vh] gap-5">
-        <h1>Home</h1>
-        <Button 
-              variant="link" 
-              className="px-0"
-              onClick={() => navigate('/register')}
-            >
-              Register
-            </Button>
+      <div className="flex justify-center items-center h-[100vh] gap-5">
 
-            <Button 
-              variant="link" 
-              className="px-0"
-              onClick={() => navigate('/login')}
-            >
-              Login
-            </Button>
-    </div>
+        <Button
+          variant="link"
+          className="px-0"
+          onClick={() => navigate('/dashboard')}
+        >
+          Dasboard
+        </Button>
+
+        <Button
+          variant="link"
+          className="px-0"
+          onClick={() => navigate('/register')}
+        >
+          Register
+        </Button>
+
+        <Button
+          variant="link"
+          className="px-0"
+          onClick={() => navigate('/login')}
+        >
+          Login
+        </Button>
+      </div>
     </>
-    
+
   )
 }
 
