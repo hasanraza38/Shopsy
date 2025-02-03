@@ -71,12 +71,12 @@ const Login = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="userName">Username</Label>
               <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="john@example.com"
+                id="userName"
+                name="userName"
+                type="text"
+                placeholder="john"
                 required
                 value={formData.userName}
                 onChange={handleChange}
