@@ -18,7 +18,8 @@ const Login = () => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+ 
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
 
@@ -35,11 +36,22 @@ const Login = () => {
       })
 
       if (response.status === 200) {
-        // Store token in localStorage or context
-        localStorage.setItem('token', response.data.token)
+        // Set cookies with tokens
+        const accessExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+        const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+        
+        document.cookie = `accessToken=${
+          response.data.accessToken
+        }; expires=${accessExpires.toUTCString()}; path=/; Secure; SameSite=Strict`;
+        
+        document.cookie = `refreshToken=${
+          response.data.refreshToken
+        }; expires=${refreshExpires.toUTCString()}; path=/; Secure; SameSite=Strict`;
+
         alert('Login successful! Redirecting to dashboard...')
         navigate('/dashboard')
       }
+
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || 'Login failed')
