@@ -3,13 +3,7 @@ import { useNavigate } from "react-router"
 
 const Home = () => {
   const navigate = useNavigate()
-
-
-
-
-
-  return (
-
+    return (
     <>
       <div className="flex justify-center items-center h-[100vh] gap-5">
 
@@ -38,7 +32,6 @@ const Home = () => {
         </Button>
       </div>
     </>
-
   )
 }
 
