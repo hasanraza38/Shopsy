@@ -42,11 +42,11 @@ const handleSubmit = async (e: React.FormEvent) => {
         
         document.cookie = `accessToken=${
           response.data.accessToken
-        }; expires=${accessExpires.toUTCString()}; path=/; Secure; SameSite=Strict`;
+        }; expires=${accessExpires.toUTCString()}; path=/; Secure; : '' SameSite=Strict`;
         
         document.cookie = `refreshToken=${
           response.data.refreshToken
-        }; expires=${refreshExpires.toUTCString()}; path=/; Secure; SameSite=Strict`;
+        }; expires=${refreshExpires.toUTCString()}; path=/; Secure; : '' SameSite=Strict`;
 
         alert('Login successful! Redirecting to dashboard...')
         navigate('/dashboard')
