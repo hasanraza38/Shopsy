@@ -275,12 +275,12 @@ interface UserData {
 }
 
 // Helper function to retrieve a cookie by name without any external package
-const getCookie = (name: string): string | null => {
-  const value = `; ${document.cookie}`
-  const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) return parts.pop()?.split(';').shift() || null
-  return null
-}
+// const getCookie = (name: string): string | null => {
+//   const value = `; ${document.cookie}`
+//   const parts = value.split(`; ${name}=`)
+//   if (parts.length === 2) return parts.pop()?.split(';').shift() || null
+//   return null
+// }
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -291,11 +291,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Retrieve the accessToken from cookies
-        const token = getCookie('accessToken')
-        // If needed, you can also get the refreshToken like this:
-        // const refreshToken = getCookie('refreshToken')
-
+       const token = await localStorage.getItem('token')
         if (!token) {
           navigate('/login')
           return
@@ -312,10 +308,9 @@ const Dashboard = () => {
         }
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          setError(err.response?.data?.message || 'Failed to fetch dashboard data')
+          setError(err.response?.data?.message || 'Failed to fetch user data')
           if (err.response?.status === 401) {
-            // Optionally clear the cookie when unauthorized
-            document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+            localStorage.removeItem('token')
             navigate('/login')
           }
         } else {
@@ -326,17 +321,16 @@ const Dashboard = () => {
       }
     }
 
+
     fetchDashboardData()
   }, [navigate])
 
   const handleLogout = () => {
-    // Remove the accessToken cookie upon logout
-    document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    localStorage.removeItem('token')
     navigate('/login')
   }
 
-  // Check if the accessToken cookie exists; if not, redirect to login
-  if (!getCookie('accessToken')) {
+  if (!localStorage.getItem('token')) {
     navigate('/login')
     return null
   }
