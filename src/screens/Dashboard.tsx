@@ -311,16 +311,16 @@ const Dashboard = () => {
           setUserData(response.data.user)
         }
       } catch (err) {
-        // if (axios.isAxiosError(err)) {
-        //   setError(err.response?.data?.message || 'Failed to fetch dashboard data')
-        //   if (err.response?.status === 401) {
-        //     // Optionally clear the cookie when unauthorized
-        //     document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-        //     navigate('/login')
-        //   }
-        // } else {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || 'Failed to fetch dashboard data')
+          if (err.response?.status === 401) {
+            // Optionally clear the cookie when unauthorized
+            document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+            navigate('/login')
+          }
+        } else {
           setError('An unexpected error occurred')
-        // }
+        }
       } finally {
         setLoading(false)
       }
