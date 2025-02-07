@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router"
 
-const Home = () => {
+// const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1
+
+
+const Home = () => {  
   const navigate = useNavigate()
     return (
     <>
