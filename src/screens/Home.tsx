@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,16 +8,37 @@ import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ShoppingCart, User } from "lucide-react";
 
-const API_URL = "xyz";
+const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/getallproducts';
+
+// Define Product Interface
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  image?: string; // Added optional 'image' property
+}
+
+// Define User Interface (if applicable)
+interface User {
+  // id: string;
+  user: string;
+  // name: string;
+  // email: string;
+}
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
+  const [user, setUser] = useState<User | null>(null); // Explicitly define the user state
+  const [products, setProducts] = useState<Product[]>([]); // Define products as an array of Product
+  const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-    axios.get(API_URL).then((response) => setProducts(response.data));
+    axios.get<Product[]>(API_URL) // Ensure TypeScript knows the expected response type
+      .then((response) => setProducts(response.data.products))
+      
+      .catch((error) => console.error("Error fetching products:", error));
+
     // Simulate checking user authentication
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
@@ -26,6 +47,8 @@ const HomePage = () => {
     }
   }, []);
 
+  console.log(products);
+  
   const handleOrderNow = () => {
     if (user) {
       navigate("/cart");
@@ -53,7 +76,15 @@ const HomePage = () => {
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => navigate("/profile")}>Profile</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate("/add-product")}>Add Product</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => { setUser(null); localStorage.removeItem("user"); navigate("/"); }}>Logout</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setUser(null);
+                    localStorage.removeItem("user");
+                    navigate("/");
+                  }}
+                >
+                  Logout
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -74,12 +105,12 @@ const HomePage = () => {
       {/* Product Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {products.map((product) => (
-          <Card key={product.id}>
+          <Card key={product._id}>
             <CardHeader>
               <CardTitle>{product.name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <img src={product.image} alt={product.name} className="w-full h-40 object-cover" />
+              {product.image && <img src={product.image} alt={product.name} className="w-full h-40 object-cover" />}
               <p className="text-sm text-gray-600">{product.description}</p>
               <Button onClick={handleOrderNow} className="mt-2 w-full">Order Now</Button>
             </CardContent>

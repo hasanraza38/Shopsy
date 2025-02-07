@@ -191,8 +191,9 @@ const Login = () => {
       if (response.status === 200) {
         // Store token in localStorage or context
         localStorage.setItem('token', response.data.accessToken)
-        alert('Login successful! Redirecting to dashboard...')
-        navigate('/dashboard')
+        localStorage.setItem('user', "logedIn")
+        alert('welcome back...')
+        navigate('/')
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
