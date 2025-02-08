@@ -10,40 +10,37 @@ import { ShoppingCart, User } from "lucide-react";
 
 const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/getallproducts';
 
-// Define Product Interface
 interface Product {
   _id: string;
   name: string;
   price: number;
   description: string;
-  image?: string; // Added optional 'image' property
+  image?: string;
 }
 
-// Define User Interface (if applicable)
 interface User {
   // id: string;
   user: string;
   // name: string;
   // email: string;
 }
-
 const HomePage = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null); // Explicitly define the user state
-  const [products, setProducts] = useState<Product[]>([]); // Define products as an array of Product
+  const [user, setUser] = useState<User | null>(null); 
+  const [products, setProducts] = useState<Product[]>([]);
   const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-    axios.get<Product[]>(API_URL) // Ensure TypeScript knows the expected response type
-      .then((response) => setProducts(response.data.products))
+axios.get<Product[]>(API_URL) 
+
+.then((response) => setProducts(response.data.products))
       
       .catch((error) => console.error("Error fetching products:", error));
 
-    // Simulate checking user authentication
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       setUser(JSON.parse(loggedInUser));
-      setCartCount(2); // Example cart count
+      setCartCount(2);
     }
   }, []);
 
@@ -117,11 +114,15 @@ const HomePage = () => {
           </Card>
         ))}
       </div>
+      {/* Product Cards */}
+
 
       {/* Footer */}
       <footer className="text-center p-4 bg-gray-100">&copy; 2025 Shopsy. All Rights Reserved.</footer>
     </div>
-  );
+      {/* Footer */}
+
+);
 };
 
 export default HomePage;
