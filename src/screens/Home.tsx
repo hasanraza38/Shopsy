@@ -16,6 +16,10 @@ interface Product {
   description: string;
   image?: string;
 }
+
+interface ApiResponse {
+  products: Product[];
+}
 // interface User {
   // id: string;
   // user: string;
@@ -27,16 +31,20 @@ const HomePage = () => {
   const navigate = useNavigate();
   // const [user, setUser] = useState<User | null>(null); 
   const [products, setProducts] = useState<Product[]>([]);
-  const [cartCount, setCartCount] = useState<number>(0);
+  const [cartCount, setCartCount] = useState<number>(5);
 
   useEffect(() => {
+const apiCall = async ()=>{
+  await axios.get<ApiResponse>(API_URL) 
+  .then((response) =>
+    {
+      console.log(response.data.products);
+      setProducts(response.data.products)})
+      .catch((error) => console.error("Error fetching products:", error));
 
-    axios.get<Product[]>(API_URL) 
-.then((response) =>
-{
-  console.log(products);
-  setProducts(response.data.products)})
-.catch((error) => console.error("Error fetching products:", error));
+}
+apiCall();
+
 
     // const loggedInUser = localStorage.getItem("user");
     // if (loggedInUser) {
