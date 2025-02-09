@@ -20,6 +20,11 @@ interface Product {
 interface ApiResponse {
   products: Product[];
 }
+
+interface CartItem extends Product {
+  quantity: number;
+}
+
 // interface User {
   // id: string;
   // user: string;
@@ -57,18 +62,19 @@ apiCall();
 
 
   const handleAddToCart = (product: Product) => {
-    let cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingProduct = cartItems.find((item: Product) => item._id === product._id);
+    let cartItems: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+    const existingProduct = cartItems.find((item) => item._id === product._id);
     
     if (existingProduct) {
-      existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+      existingProduct.quantity += 1;
     } else {
       cartItems.push({ ...product, quantity: 1 });
     }
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    setCartCount(cartItems.length);
+    setCartCount(cartItems.reduce((total, item) => total + item.quantity, 0));
   };
+
 
   // const handleOrderNow = () => {
   //   // if (user) {

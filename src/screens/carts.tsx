@@ -17,8 +17,10 @@ const CartPage = () => {
   }, []);
 
   const updateQuantity = (index: number, quantity: number) => {
+    if (quantity < 1) return;
     const updatedCart = [...cartItems];
     updatedCart[index].quantity = quantity;
+    updatedCart[index].totalPrice = updatedCart[index].price * quantity;
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
@@ -48,7 +50,7 @@ const CartPage = () => {
               </CardHeader>
               <CardContent className="flex items-center justify-between">
                 <img src={item.image} alt={item.name} className="w-20 h-20 object-cover" />
-                <p className="text-lg font-semibold">${item.price}</p>
+                <p className="text-lg font-semibold">${item.totalPrice || item.price}</p>
                 <Input
                   type="number"
                   min="1"
