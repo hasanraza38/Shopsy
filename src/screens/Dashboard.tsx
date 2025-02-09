@@ -56,7 +56,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-       const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token')
         // if (!token) {
         //   navigate('/login')
         //   return
@@ -71,14 +71,14 @@ const Dashboard = () => {
         if (response.status === 200) {
           setUserData(response.data.user)
           console.log(response.data);
-          
+
         }
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || 'Failed to fetch user data')
           // if (err.response?.status === 401) {
-            // localStorage.removeItem('token')
-            // navigate('/login')
+          // localStorage.removeItem('token')
+          // navigate('/login')
           // }
         } else {
           setError('An unexpected error occurred')

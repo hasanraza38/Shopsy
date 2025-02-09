@@ -2,14 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ShoppingCart, User } from "lucide-react";
-
 const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/getallproducts';
-
 interface Product {
   _id: string;
   name: string;
@@ -17,7 +15,6 @@ interface Product {
   description: string;
   image?: string;
 }
-
 interface User {
   // id: string;
   user: string;
