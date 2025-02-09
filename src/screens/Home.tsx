@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ShoppingCart, User } from "lucide-react";
 const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/getallproducts';
+
 interface Product {
   _id: string;
   name: string;
@@ -15,40 +16,42 @@ interface Product {
   description: string;
   image?: string;
 }
-interface User {
+// interface User {
   // id: string;
-  user: string;
+  // user: string;
   // name: string;
   // email: string;
-}
+// }
+
 const HomePage = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null); 
+  // const [user, setUser] = useState<User | null>(null); 
   const [products, setProducts] = useState<Product[]>([]);
   const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-axios.get<Product[]>(API_URL) 
 
-.then((response) => setProducts(response.data.products))
-      
-      .catch((error) => console.error("Error fetching products:", error));
+    axios.get<Product[]>(API_URL) 
+.then((response) =>
+{
+  console.log(products);
+  setProducts(response.data.products)})
+.catch((error) => console.error("Error fetching products:", error));
 
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser));
-      setCartCount(2);
-    }
+    // const loggedInUser = localStorage.getItem("user");
+    // if (loggedInUser) {
+      // setUser(JSON.parse(loggedInUser));
+      // setCartCount(2);
+    // }
   }, []);
 
-  console.log(products);
   
   const handleOrderNow = () => {
-    if (user) {
+    // if (user) {
       navigate("/cart");
-    } else {
-      navigate("/login");
-    }
+    // } else {
+      // navigate("/login");
+    // }
   };
 
   return (
@@ -57,7 +60,7 @@ axios.get<Product[]>(API_URL)
       <nav className="flex justify-between p-4 bg-gray-100 shadow-md">
         <h1 className="text-xl font-bold">Shopsy</h1>
         <Input placeholder="Search products..." className="max-w-sm" />
-        {user ? (
+        {/* {user ? ( */}
           <div className="flex items-center gap-4">
             <Button onClick={() => navigate("/cart")}>
               <ShoppingCart />
@@ -72,8 +75,8 @@ axios.get<Product[]>(API_URL)
                 <DropdownMenuItem onClick={() => navigate("/add-product")}>Add Product</DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    setUser(null);
-                    localStorage.removeItem("user");
+                    // setUser(null);
+                    // localStorage.removeItem("user");
                     navigate("/");
                   }}
                 >
@@ -82,12 +85,13 @@ axios.get<Product[]>(API_URL)
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        ) : (
-          <div className="flex gap-2">
-            <Button onClick={() => navigate("/login")}>Login</Button>
-            <Button onClick={() => navigate("/register")}>Register</Button>
-          </div>
-        )}
+
+        {/* // ) : ( */}
+        {/* //   <div className="flex gap-2"> */}
+        {/* //     <Button onClick={() => navigate("/login")}>Login</Button> */}
+        {/* //     <Button onClick={() => navigate("/register")}>Register</Button> */}
+        {/* //   </div> */}
+        {/* // )} */}
       </nav>
 
       {/* Marquee */}
@@ -117,7 +121,8 @@ axios.get<Product[]>(API_URL)
       {/* Footer */}
       <footer className="text-center p-4 bg-gray-100">&copy; 2025 Shopsy. All Rights Reserved.</footer>
     </div>
-      {/* Footer */}
+
+// {/* Footer */}
 
 );
 };
