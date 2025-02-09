@@ -44,23 +44,39 @@ const apiCall = async ()=>{
 
 }
 apiCall();
-
-
     // const loggedInUser = localStorage.getItem("user");
     // if (loggedInUser) {
       // setUser(JSON.parse(loggedInUser));
       // setCartCount(2);
     // }
+
+
+    const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCartCount(cartItems.length);
   }, []);
 
-  
-  const handleOrderNow = () => {
-    // if (user) {
-      navigate("/cart");
-    // } else {
-      // navigate("/login");
-    // }
+
+  const handleAddToCart = (product: Product) => {
+    let cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+    const existingProduct = cartItems.find((item: Product) => item._id === product._id);
+    
+    if (existingProduct) {
+      existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+    } else {
+      cartItems.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    setCartCount(cartItems.length);
   };
+
+  // const handleOrderNow = () => {
+  //   // if (user) {
+  //     navigate("/cart");
+  //   // } else {
+  //     // navigate("/login");
+  //   // }
+  // };
 
   return (
     <div>
@@ -70,10 +86,12 @@ apiCall();
         <Input placeholder="Search products..." className="max-w-sm" />
         {/* {user ? ( */}
           <div className="flex items-center gap-4">
+            
             <Button onClick={() => navigate("/cart")}>
               <ShoppingCart />
               {cartCount > 0 && <Badge>{cartCount}</Badge>}
             </Button>
+
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <User />
@@ -118,7 +136,7 @@ apiCall();
             <CardContent>
               {product.image && <img src={product.image} alt={product.name} className="w-full h-40 object-cover" />}
               <p className="text-sm text-gray-600">{product.description}</p>
-              <Button onClick={handleOrderNow} className="mt-2 w-full">Order Now</Button>
+              <Button onClick={()=> handleAddToCart(product)} className="mt-2 w-full">Order Now</Button>
             </CardContent>
           </Card>
         ))}
