@@ -6,6 +6,7 @@ import Home from "./screens/Home.js";
 import Login from "./screens/Login.js";
 import Register from "./screens/Register.js";
 import Dashboard from "./screens/Dashboard.js";
+import Carts from "./screens/carts.js"
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element:<Dashboard/>,
+      },
+      {
+        path: '/cart',
+        element:<Carts/>,
       }
   ],
   },
@@ -37,5 +42,4 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <RouterProvider router={router} />
 );
-
 
