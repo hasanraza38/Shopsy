@@ -14,6 +14,17 @@ const CartPage = () => {
     if (storedCart) {
       setCartItems(JSON.parse(storedCart));
     }
+
+    // const updateQuantity = (index: number, quantity: number) => {
+    //   if (quantity < 1) return;
+    //   const updatedCart = [...cartItems];
+    //   updatedCart[index].quantity = quantity;
+    //   updatedCart[index].totalPrice = updatedCart[index].price * quantity;
+    //   setCartItems(updatedCart);
+    //   localStorage.setItem("cart", JSON.stringify(updatedCart));
+    // };
+
+    
   }, []);
 
   const updateQuantity = (index: number, quantity: number) => {
