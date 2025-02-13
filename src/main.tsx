@@ -7,6 +7,8 @@ import Login from "./screens/Login.js";
 import Register from "./screens/Register.js";
 import Dashboard from "./screens/Dashboard.js";
 import Carts from "./screens/carts.js"
+import Success from "./screens/success.js";
+import Cancel from "./screens/cancel.js";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,18 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element:<Carts/>,
+      },
+      {
+        path: '/success',
+        element:<Success/>,
+      },
+      {
+        path: '/cancel',
+        element:<Cancel/>,
+      },
+      {
+        path: '*',
+        element:<h1>NOT FOUND!!</h1>,
       }
   ],
   },
