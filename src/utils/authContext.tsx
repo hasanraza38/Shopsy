@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await API.get("/auth/dashboard");
+        const { data } = await API.get("/getdashboard");
         setUser(data.user);
       } catch (error) {
         console.error("Not logged in");
@@ -25,13 +25,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const { data } = await API.post("/auth/login", { email, password });
+    const { data } = await API.post("/loginuser", { email, password });
     localStorage.setItem("accessToken", data.accessToken);
     setUser(data.data);
   };
 
   const logout = async () => {
-    await API.post("/auth/logout");
+    await API.post("/logoutuser");
     localStorage.removeItem("accessToken");
     setUser(null);
   };
