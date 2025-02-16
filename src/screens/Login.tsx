@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
+import { AuthContext } from "../utils/authContext";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/auth/loginuser'
+// const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/auth/loginuser'
 
 const Login = () => {
   const navigate = useNavigate()
+  const { login } = useContext(AuthContext)!;
+
   const [formData, setFormData] = useState({
     userName: '',
     email: '',
@@ -28,19 +31,20 @@ const Login = () => {
 
     try {
       setLoading(true)
-      const response = await axios.post(API_URL, {
-        username: formData.userName,
-        email: formData.email,
-        password: formData.password
-      })
+      // const response = await axios.post(API_URL, {
+      //   username: formData.userName,
+      //   email: formData.email,
+      //   password: formData.password
+      // })
 
-      if (response.status === 200) {
-        // Store token in localStorage or context
-        localStorage.setItem('token', response.data.accessToken)
-        localStorage.setItem('user', "logedIn")
-        alert('welcome back...')
-        navigate('/')
-      }
+      // if (response.status === 200) {
+      //   // Store token in localStorage or context
+      //   localStorage.setItem('token', response.data.accessToken)
+      //   localStorage.setItem('user', "logedIn")
+      // }
+      await login(formData.userName,formData.email,formData.password);
+      alert('welcome back...')
+      navigate('/')
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || 'Login failed')

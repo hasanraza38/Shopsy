@@ -3,7 +3,7 @@ import API from "./axiosInstance";
 
 interface AuthContextType {
   user: any;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -24,8 +24,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchUser();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const { data } = await API.post("/loginuser", { email, password });
+  const login = async (username: string, email: string, password: string) => {
+    const { data } = await API.post("/loginuser", { username,email, password });
     localStorage.setItem("accessToken", data.accessToken);
     setUser(data.data);
   };
