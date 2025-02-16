@@ -12,7 +12,7 @@ API.interceptors.response.use(
     if (error.response?.status === 401) {
       try {
         // Request new access token using refresh token
-        const { data } = await API.post("/auth/refresh-token");
+        const { data } = await API.post("/refreshtoken");
         localStorage.setItem("accessToken", data.accessToken);
 
         // Retry the failed request
