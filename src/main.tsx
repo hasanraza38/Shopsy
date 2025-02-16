@@ -6,7 +6,7 @@ import Home from "./screens/Home.js";
 import Login from "./screens/Login.js";
 import Register from "./screens/Register.js";
 import Dashboard from "./screens/Dashboard.js";
-import Carts from "./screens/Carts.js"
+// import Carts from "./screens/Carts.js"
 import Success from "./screens/Success.js";
 import Cancel from "./screens/Cancel.js";
 
@@ -32,10 +32,10 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element:<Dashboard/>,
       },
-      {
-        path: '/cart',
-        element:<Carts/>,
-      },
+      // {
+        // path: '/cart',
+        // element:<Carts/>,
+      // },
       {
         path: '/success',
         element:<Success/>,
