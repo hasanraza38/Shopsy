@@ -7,11 +7,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-// const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/auth/loginuser'
+const API_URL = 'https://selfish-irita-hasanraza38-9f48365c.koyeb.app/api/v1/auth/loginuser'
 
 const Login = () => {
   const navigate = useNavigate()
-  const { login } = useContext(AuthContext)!;
+  // const { login } = useContext(AuthContext)!;
 
   const [formData, setFormData] = useState({
     userName: '',
@@ -31,22 +31,26 @@ const Login = () => {
 
     try {
       setLoading(true)
-      // const response = await axios.post(API_URL, {
-      //   username: formData.userName,
-      //   email: formData.email,
-      //   password: formData.password
-      // })
+      const response = await axios.post(API_URL, {
+        username: formData.userName,
+        email: formData.email,
+        password: formData.password
+      },
+      {
+        withCredentials: true,
+      })
 
       // if (response.status === 200) {
       //   // Store token in localStorage or context
       //   localStorage.setItem('token', response.data.accessToken)
       //   localStorage.setItem('user', "logedIn")
       // }
-      await login(formData.userName,formData.email,formData.password);
+      // await login(formData.userName,formData.email,formData.password);
+
       alert('welcome back...')
       navigate('/')
     } catch (err) {
-      if (axios.isAxiosError(err)) {
+      if (err) {
         setError(err.response?.data?.message || 'Login failed')
       } else {
         setError('An unexpected error occurred')
