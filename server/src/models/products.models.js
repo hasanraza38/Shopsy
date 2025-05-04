@@ -5,19 +5,19 @@ const productSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
     description: {
       type: String,
     },
     price: {
       type: Number,
-      required: true,
+      // required: true,
     },
     image: {
       type: String,
     },
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
@@ -34,4 +34,4 @@ const productSchema = new Schema(
   }
 );
 
-export default mongoose.model("Products", productSchema);
+export default mongoose.model("Product", productSchema);

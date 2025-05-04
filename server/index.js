@@ -3,11 +3,11 @@ dotenv.config();
 import express from "express";
 import connectDB from "./src/db/index.js";
 import cors from "cors";
-import usersRoutes from "./src/routes/users.routes.js";
+import usersRoutes from "./src/routes/auth.routes.js";
 import productRoutes from "./src/routes/products.routes.js";
 import ordersRoutes from "./src/routes/orders.routes.js";
-import checkoutRoutes from "./src/routes/checkout.routes.js";
 import cookieParser from "cookie-parser";
+import dashboardRoutes from "./src/routes/dashboard.routes.js";
 
 const app = express();
 const port = process.env.PORT;
@@ -20,13 +20,13 @@ app.use(
     credentials: true,
   })
 );
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173"); 
-  res.header("Access-Control-Allow-Credentials", "true"); 
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:5173"); 
+//   res.header("Access-Control-Allow-Credentials", "true"); 
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
 
 
 app.get("/", (req, res) => {
@@ -34,10 +34,11 @@ app.get("/", (req, res) => {
 });
 
 // routes
-app.use("/api/v1", productRoutes);
+app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/auth", usersRoutes);
-app.use("/api/v1", ordersRoutes);
-app.use("/api/v1", checkoutRoutes );
+app.use("/api/v1/order", ordersRoutes);
+app.use("/api/v1/dashboard", dashboardRoutes);
+
 
 connectDB()
   .then(() => {

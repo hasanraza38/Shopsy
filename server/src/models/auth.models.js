@@ -19,14 +19,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    refreshToken: {
-      type: String
-    },
-    role: {
-      type: String,
-      enum: ["admin", "customer"],
-      default: "customer",
-    },
     products: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -54,4 +46,4 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-export default mongoose.model("Users", userSchema);
+export default mongoose.model("User", userSchema);

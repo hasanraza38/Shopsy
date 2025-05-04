@@ -5,29 +5,19 @@ import jwt from "jsonwebtoken"
 
 // authenticate user middleware
 const authenticateUser = async (req, res, next) => {
-    // const token = req.headers["authorization"];
-    // if (!token) return res.status(404).json({ message: "no token found" });
-  
-    // jwt.verify(token, process.env.ACCESS_JWT_SECRET, (err, user) => {
-    //   if (err) return res.status(403).json({ message: "invalid token" });
-    //   req.user = user;
-    //   next();
-    // });
-
-
-
-  try {
-    const token = req.headers.authorization?.split(" ")[1];
+    
+    
+    try {
+    const token = req.cookies.accessToken;
     
     if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized access",
-      });
+      return res.status(401).json({ message: 'Not authorized, no token' });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.userId;
+    const decoded = jwt.verify(token, process.env.ACCESS_JWT_SECRET);
+    // console.log(decoded);
+    
+    req.user = { id: decoded.id };
     next();
     
   } catch (error) {
@@ -39,5 +29,8 @@ const authenticateUser = async (req, res, next) => {
   }
 };
   // authenticate user middleware
+
+
+  
 
   export  {authenticateUser}
