@@ -55,9 +55,8 @@ const registerUser = async (req, res) => {
 
 // login User
 const loginUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!username) return res.status(400).json({ message: "user Name required" });
   if (!email) return res.status(400).json({ message: "email required" });
   if (!password) return res.status(400).json({ message: "password required" });
 

@@ -4,14 +4,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm,  } from "react-hook-form";
 import {  Loader2, Terminal } from "lucide-react"
 import { useRouter } from 'next/navigation';
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert"
 import { api } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -232,7 +227,7 @@ const Register = () => {
 
         </form>
 
-        <p className="text-center mt-3 font-semibold">already have an account? <span className="font-sans" ><Link href="/login">Login</Link></span></p>
+        <p className="text-center mt-3 font-semibold">Already have an account? <span className="underline-offset-4 hover:underline" ><Link href="/login">Login</Link></span></p>
 
       </div>
 
