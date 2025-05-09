@@ -17,10 +17,10 @@ const registerUser = async (req, res) => {
     if (!password) return res.status(400).json({ message: "password required" });
 
     const userName = await Users.findOne({ username: username });
-    if (userName) return res.status(401).json({ message: "username not available" });
+    if (userName) return res.status(401).json({ message: "user already exist with username" });
 
     const user = await Users.findOne({ email: email });
-    if (user) return res.status(401).json({ message: "user already exist" });
+    if (user) return res.status(401).json({ message: "user already exist with email" });
 
 
     // let imageUrl = null;
