@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 // import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/generateTokens.js";
 import sendEmail from "../utils/mail.js";
+import { uploadImageToCloudinary } from "../utils/cloudinary.js";
 
 
 
@@ -23,22 +24,26 @@ const registerUser = async (req, res) => {
     if (user) return res.status(401).json({ message: "user already exist with email" });
 
 
-    // let imageUrl = null;
+    let imageUrl = null;
 
-    // if (req.file) {
-    //   const uploadResult = await uploadOnCloudinary(req.file.path);
-    //   if (!uploadResult) {
-    //     return res
-    //       .status(500)
-    //       .json({ message: "Error occurred while uploading the image" });
-    //   }
-    //   imageUrl = uploadResult;
-    // }
+    if (req.file) {
+      const uploadResult = await uploadImageToCloudinary(req.file.path);
+      console.log(uploadResult);
+      
+      if (!uploadResult) {
+        return res
+          .status(500)
+          .json({ message: "Error occurred while uploading the image" });
+      }
+      imageUrl = uploadResult;
+    }
+
+
     const createUser = await Users.create({
       username,
       email,
       password,
-      // avatar: imageUrl,      
+      avatar: imageUrl,      
     });
 
     res.status(201).json({ message: "user registered successfully", data: createUser });
@@ -83,15 +88,32 @@ const loginUser = async (req, res) => {
   .cookie("refreshToken", refreshToken, options)
   .json({
     message: "user logged in successfuly",
-    accessToken,
-    refreshToken,
-    data: user,
-
   }
 )
 
 };
 // login User
+
+
+
+// authorize user
+ const authorizeUser = (req, res) => {
+  try {
+    res.status(200).json({
+      isAuthenticated: true,
+      user: {
+        id: req.user.id,
+        email: req.user.email,
+      },
+    });
+  } catch (error) {
+    console.error('Check Auth Error:', error);
+    res.status(401).json({ isAuthenticated: false, message: 'Not authenticated' });
+  }
+}
+// authorize user
+
+
 
 
 
@@ -128,6 +150,33 @@ const logoutUser = async (req, res) => {
 
 
 
+const uploadImage = async (req, res) => {
+  if (!req.file)
+    return res.status(400).json({
+      message: "no image file uploaded",
+    });
+    // console.log(req.file.path);
+    
+
+  try {
+    const uploadResult = await uploadImageToCloudinary(req.file.path);
+
+    if (!uploadResult)
+      return res
+        .status(500)
+        .json({ message: "error occured while uploading image" });
+
+    res.json({
+      message: "image uploaded successfully",
+      url: uploadResult,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "error occured while uploading image" });
+  }
+};
 
 
-export { registerUser, loginUser, refreshToken, logoutUser};
+
+
+export { registerUser, loginUser, refreshToken, logoutUser, authorizeUser,uploadImage};

@@ -1,5 +1,8 @@
 import {v2 as cloudinary} from "cloudinary"
+import { log } from "console";
 import fs from "fs"
+import dotenv from "dotenv";
+dotenv.config();
 
 
 cloudinary.config({ 
@@ -8,24 +11,51 @@ cloudinary.config({
   api_secret: process.env.API_SECRET 
 });
 
-const uploadOnCloudinary = async (localFilePath) => {
-    try {
-        if (!localFilePath) return null
-        //upload the file on cloudinary
-        const response = await cloudinary.uploader.upload(localFilePath, {
-            resource_type: "auto"
-        })
-        // file has been uploaded successfull
-        console.log("file is uploaded on cloudinary ", response.url);
-        fs.unlinkSync(localFilePath)
-        return response;
 
-    } catch (error) {
-        fs.unlinkSync(localFilePath) // remove the locally saved temporary file as the upload operation got failed
-        return null;
+
+
+
+// const uploadImageToCloudinary = async (localpath) => {
+//   console.log(localpath);
+  
+//   try {
+//     const uploadResult = await cloudinary.uploader.upload(localpath, {
+//       resource_type: "auto",
+//     });
+    
+//     fs.unlinkSync(localpath);
+    
+//     return uploadResult.url;
+//   } catch (error) {
+//     fs.unlinkSync(localpath);
+//     return null;
+//   }
+// };
+
+
+const uploadImageToCloudinary = async (localpath) => {
+
+  try {
+    const uploadResult = await cloudinary.uploader.upload(localpath, {
+      resource_type: "auto",
+    });
+
+    console.log("Upload success:", uploadResult);
+    fs.unlinkSync(localpath); 
+    return uploadResult.url;
+
+  } catch (error) {
+    console.error("Cloudinary upload error:", error);
+    
+    if (fs.existsSync(localpath)) {
+      fs.unlinkSync(localpath); 
     }
-}
+
+    return null;
+  }
+};
 
 
 
-export {uploadOnCloudinary}
+
+export {uploadImageToCloudinary}

@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useForm,  } from "react-hook-form";
-import {  Loader2, Terminal } from "lucide-react"
+import { useForm, Controller } from "react-hook-form";
+import { Loader2, Terminal } from "lucide-react"
 import { useRouter } from 'next/navigation';
 import { api } from "@/lib/utils";
 import { toast } from "sonner";
@@ -15,10 +15,9 @@ type FormData = {
   email: string;
   username: string;
   password: string;
-  confirmPassword:string;
+  confirmPassword: string;
   avatar: FileList | null;
 };
-
 
 
 const Register = () => {
@@ -27,9 +26,10 @@ const Register = () => {
   const [formData, setFormData] = useState<FormData | null>(null);
   const [apiError, setApiError] = useState<string | null>(null)
   const router = useRouter();
-  
-  
+
+
   const {
+    control,
     register,
     handleSubmit,
     watch,
@@ -39,20 +39,27 @@ const Register = () => {
   const password = watch("password")
 
 
-  const onSubmit = async(data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     setIsLoading(true)
     setApiError(null)
+
     try {
+      const file = data.avatar?.[0]
 
-      const {...payload } = data
+      const formData = new FormData()
+      if (file) formData.append("avatar", file)
+      formData.append("username", data.username)
+      formData.append("email", data.email)
+      formData.append("password", data.password)
 
-      //  console.log(payload);
+      // console.log(formData);
 
-      const response = await api.post("auth/registeruser", payload)
+
+      const response = await api.post("auth/registeruser", formData)
       // console.log(response.data)
       setSignupSuccess(true)
       toast.success("Account Created Successfully Redirecting to Login...")
-    } catch (error :any) {
+    } catch (error: any) {
       console.error("Signup error:", error)
       setFormData(data)
 
@@ -65,8 +72,8 @@ const Register = () => {
           const errorMessage = error.response.data.message || error.response.data.error
           setApiError(errorMessage || "Please check your information and try again.")
         }
-         else if (error.response.status === 500) {
-          setApiError("Server error. Please try again later")
+        else if (error.response.status === 500) {
+          setApiError(error.response.data.message || "Server error. Please try again later")
         } else {
           setApiError(error.response.data.message || "Registration failed. Please try again.")
         }
@@ -77,7 +84,7 @@ const Register = () => {
       }
     } finally {
       setIsLoading(false)
-      
+
     }
   };
 
@@ -92,10 +99,10 @@ const Register = () => {
           label: "Try Again",
           onClick: () => {
             if (formData) {
-              onSubmit(formData); 
+              onSubmit(formData);
             }
           },
-       },
+        },
       });
     }
   }, [apiError]);
@@ -105,7 +112,7 @@ const Register = () => {
     if (signupSuccess) {
       setTimeout(() => {
         router.push('/login');
-      }, 1500); 
+      }, 1500);
     }
   }, [signupSuccess, router]);
 
@@ -193,7 +200,7 @@ const Register = () => {
               id="confirmpassword"
               placeholder="••••••••"
               {...register("confirmPassword", {
-               required: "Please confirm your password",
+                required: "Please confirm your password",
                 validate: (value) => value === password || "Passwords do not match",
               })}
               className={`border border-black shadow shadow-zinc-500 ${errors.confirmPassword ? "border-red-500" : "border-black"}`}
@@ -205,15 +212,30 @@ const Register = () => {
             )}
           </div>
 
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="avatar">Avatar</Label>
-            <Input
-              className="bg-amber-50 shadow shadow-zinc-500"
-              id="avatar"
-              type="file"
-              {...register("avatar")}
-            />
-          </div>
+          <Controller
+            name="avatar"
+            control={control}
+            rules={{ required: "avatar is required" }}
+            render={({ field }) => (
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+
+                <Label htmlFor="avatar">Avatar</Label>
+                <Input
+                  className="bg-amber-50 shadow shadow-zinc-500"
+                  type="file"
+                  id="avatar"
+
+                  accept="avatar/*"
+                  onChange={(e) => field.onChange(e.target.files)}
+                />
+                {errors.avatar && (
+                  <p className="text-red-500 text-sm">{errors.avatar.message}</p>
+                )}
+              </div>
+            )}
+          />
+
+
 
           {
             isLoading ?
@@ -231,8 +253,8 @@ const Register = () => {
 
       </div>
 
-      
-      
+
+
 
     </div>
   )
