@@ -1,7 +1,5 @@
 "use client"
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
 import { api } from "@/helper/api";
 import { CheckCircle2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,11 +26,15 @@ const Confirm = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<OrderData | null>(null);
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get('session_id');
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
 
-
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("session_id");
+    setSessionId(id);
+  }, []);
+  
   useEffect(() => {
     const confirmOrder = async () => {
       if (!sessionId) {
