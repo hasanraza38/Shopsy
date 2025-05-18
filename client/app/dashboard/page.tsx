@@ -1,26 +1,26 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "components/ui/card"
 import { ArrowLeft, Plus, ShoppingBag } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import Navbar from "@/components/navbar"
+} from "components/ui/dialog"
+import { Input } from "components/ui/input"
+import { Label } from "components/ui/label"
+import { Textarea } from "components/ui/textarea"
+import Navbar from "components/navbar"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import Image from "next/image"
 import { Edit, Trash2 } from "lucide-react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/ui/table"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,11 +31,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Skeleton } from "@/components/ui/skeleton"
-import { api } from "@/helper/api"
-import { formatDate, formatTime } from "@/helper/formateDateAndTime"
-import Footer from "@/components/footer"
+} from "components/ui/alert-dialog"
+import { Skeleton } from "components/ui/skeleton"
+import { api } from "helper/api"
+import { formatDate, formatTime } from "helper/formateDateAndTime"
+import Footer from "components/footer"
 
 
 

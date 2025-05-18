@@ -1,10 +1,10 @@
 "use client"
 import { useEffect, useState } from "react";
-import { api } from "@/helper/api";
 import { CheckCircle2 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { api } from "helper/api";
+import { Card, CardContent } from "components/ui/card";
+import { Button } from "components/ui/button";
 
 
 

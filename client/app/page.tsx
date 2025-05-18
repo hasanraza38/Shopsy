@@ -1,23 +1,17 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import Navbar from '@/components/navbar'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from '@/components/ui/button'
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "components/ui/card"
+import Navbar from 'components/navbar'
+import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar"
+import { Button } from 'components/ui/button'
 import Image from 'next/image'
-import Footer from '@/components/footer'
+import Footer from 'components/footer'
 import Link from 'next/link'
-import ProductCardSkeleton from '@/components/productSkeleton'
-import { api } from '@/helper/api'
-import HomePageCarousel from '@/components/carousel'
+import ProductCardSkeleton from 'components/productSkeleton'
+import { api } from 'helper/api'
+import HomePageCarousel from 'components/carousel'
 
 type Product = {
   _id: string
