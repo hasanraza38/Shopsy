@@ -1,7 +1,6 @@
 import Users from "../models/auth.models.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-// import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/generateTokens.js";
 import sendEmail from "../utils/mail.js";
 import { uploadImageToCloudinary } from "../utils/cloudinary.js";
@@ -28,7 +27,7 @@ const registerUser = async (req, res) => {
 
     if (req.file) {
       const uploadResult = await uploadImageToCloudinary(req.file.path);
-      console.log(uploadResult);
+      // console.log(uploadResult);
       
       if (!uploadResult) {
         return res
@@ -78,8 +77,8 @@ const loginUser = async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   }
   
   return res
@@ -96,16 +95,27 @@ const loginUser = async (req, res) => {
 
 
 
+
+
 // authorize user
- const authorizeUser = (req, res) => {
+ const authorizeUser = async (req, res) => {
   try {
+
+    const user = await Users.findById(req.user.id).select('-password'); 
+
+    if (!user) {
+      return res.status(404).json({ isAuthenticated: false, message: 'User not found' });
+    }
+
     res.status(200).json({
       isAuthenticated: true,
-      user: {
-        id: req.user.id,
-        email: req.user.email,
+      user:{  
+        id: user.id,
+        email: user.email,
+        avatar: user.avatar,
+        username: user.username,
       },
-    });
+    }); 
   } catch (error) {
     console.error('Check Auth Error:', error);
     res.status(401).json({ isAuthenticated: false, message: 'Not authenticated' });
@@ -128,8 +138,8 @@ const refreshToken = async (req, res) => {
     res.cookie('accessToken', accessToken, 
       {
         httpOnly: true,
-        secure: false,
-        sameSite: 'lax',
+        secure: true,
+        sameSite: 'none',
        });
     res.json({ message: 'Token refreshed' });
   });
@@ -171,7 +181,7 @@ const uploadImage = async (req, res) => {
       url: uploadResult,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ message: "error occured while uploading image" });
   }
 };

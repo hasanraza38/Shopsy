@@ -5,29 +5,29 @@ const productSchema = new Schema(
   {
     name: {
       type: String,
-      // required: true,
+      required: true,
     },
     description: {
       type: String,
     },
     price: {
       type: Number,
-      // required: true,
+      required: true,
     },
     image: {
       type: String,
+      required: true,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    orderItems: [
+  orders: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Order",
       },
     ],
-
   },
   {
     timestamps: true,

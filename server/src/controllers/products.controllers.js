@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import Products from "../models/products.models.js";
-// import { uploadOnCloudinary } from "../utils/cloudinary.js";
-
+import { uploadImageToCloudinary } from "../utils/cloudinary.js";
+import Users from "../models/auth.models.js";
 
 
 
@@ -19,17 +19,35 @@ const addProduct = async (req, res) => {
   if (!price)
     return res.status(400).json({ message: "product price is required" });
 
+
+  let imageUrl = null;
+  
+      if (req.file) {
+        const uploadResult = await uploadImageToCloudinary(req.file.path);
+        // console.log(uploadResult);
+        
+        if (!uploadResult) {
+          return res
+            .status(500)
+            .json({ message: "Error occurred while uploading the image" });
+        }
+        imageUrl = uploadResult;
+      }
+
   try {
-    
-console.log(userId);
+
+// console.log(userId);
 
     const product = await Products.create({
       name,
       description,
-      // image: imageUrl,
+      image: imageUrl,
       userId,
       price
     });
+
+   await Users.updateOne({ _id: userId }, { $push: { products: product._id } });
+
 
     res.status(201).json({
       message: "Product added successfully",

@@ -15,13 +15,20 @@ const sendEmail = async (email, username) => {
         });
 
 
-        const info = await transporter.sendMail({
-            from:  `"HASAN RAZA" <${process.env.EMAIL}>`,
-            to: `${email}, 92hasanraza689@gmail.com`,
-            subject: "WElCOME🎉",
-            text: `Welcome to Shopsy, ${username}`,
-        });
 
+        const info = await transporter.sendMail({
+            from: `"HASAN RAZA" <${process.env.EMAIL}>`,
+            to: `${email}, 92hasanraza689@gmail.com`,
+            subject: "Welcome to Shopsy 🎉",
+            text: `Hi ${username},
+          
+          Welcome to Shopsy! We're excited to have you on board.
+          
+          Start exploring amazing products today.
+          
+          — Team Shopsy`
+          });
+          
         // console.log("Email sent: %s", info.messageId);
 
     } catch (error) {

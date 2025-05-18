@@ -1,6 +1,8 @@
 import Product from "../models/products.models.js";
 import Stripe from "stripe";
 import Order from "../models/order.models.js";
+import Users from "../models/auth.models.js";
+import Products from "../models/products.models.js";
 
 
 const stripe = new Stripe(
@@ -10,7 +12,7 @@ const stripe = new Stripe(
 const placeOrder = async (req, res) => {
   try {
     const { products } = req.body;
-    console.log(products);
+    // console.log(products);
 
     if (!products || products.length === 0) {
       return res.status(400).json({ message: "No products provided" });
@@ -39,10 +41,10 @@ const placeOrder = async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:5173/confirm?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: "http://localhost:5173/cancel",
+      success_url: `http://localhost:3000/confirm?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: "http://localhost:3000/cancel",
       metadata: {
-        // userId: req.user._id.toString(),
+        userId: req.user.id.toString(),
         products: JSON.stringify(products),
         totalPrice: totalPrice.toString(),
       },
@@ -61,7 +63,7 @@ const placeOrder = async (req, res) => {
   }
 };
 
-// Confirm Order: Creates order in database after successful payment
+
 const confirmOrder = async (req, res) => {
   try {
     const { session_id } = req.query;
@@ -76,26 +78,33 @@ const confirmOrder = async (req, res) => {
       return res.status(400).json({ message: "Payment not completed" });
     }
 
-    // userId
-    const { products, totalPrice } = session.metadata;
+    const { products, totalPrice ,userId} = session.metadata;
     const parsedProducts = JSON.parse(products);
 
     const order = await Order.create({
-      // user: userId,
+      userId,
       products: parsedProducts,
       totalPrice: parseFloat(totalPrice),
     });
+    await Users.updateOne({ _id: userId }, { $push: { orders: order._id } });
+    
+    await Products.updateMany(
+      { _id: { $in: parsedProducts } },
+      { $push: { orders: order._id } }
+    );
 
-    // Populate user and product details
+    
+    
+    
     const populatedOrder = await Order.findById(order._id)
-      // .populate("user", "name email")
-      .populate({
-        path: "products",
-        // populate: { path: "userId", select: "name email" },
-      });
+    .populate("userId", "email username")
+    .populate({
+      path: "products",
+      populate: { path: "userId", select: "email username" },
+    });
 
     res.status(201).json({
-      message: "Order placed successfully",
+      message: "Order placed successfully",      
       order: populatedOrder,
     });
   } catch (error) {

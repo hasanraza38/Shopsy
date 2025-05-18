@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    // userId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    //   required: true ,
-    // },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true ,
+    },
     products: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -19,15 +19,11 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    // orderDate: {
-    //   type: Date,
-    //   default: Date.now,
-    // },
-    // status: {
-    //   type: String,
-    //   enum: ["pending", "completed", "shipped", "canceled"],
-    //   default: "pending",
-    // },
+    orderDate: {
+      type: Date,
+      default: Date.now,
+    },
+    
   },
   {
     timestamps: true,
