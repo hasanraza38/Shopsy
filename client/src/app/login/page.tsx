@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { useForm,  } from "react-hook-form";
 import {  Loader2, Terminal } from "lucide-react"
 import { useRouter } from 'next/navigation';
-import { api } from "@/lib/utils";
 import { toast } from "sonner";
+import { api } from "@/helper/api";
 
 
 type FormData = {
@@ -104,7 +104,7 @@ const Login = () => {
     <div className="min-h-screen flex justify-center items-center bg-[#ffffff]">
 
       <div className="w-full max-w-md mx-auto  p-6 sm:p-8 ml-5 mr-5 bg-amber-200 rounded-2xl shadow-2xl shadow-zinc-600 ">
-        <h1 className="text-center font-bold text-2xl mb-3">Login</h1>
+        <h1 className="text-center font-bold  text-2xl mb-3">Login</h1>
 
         {apiError && (
           <div className="mx-6 mt-4 p-3  text-red-700 font-semibold">{apiError}</div>

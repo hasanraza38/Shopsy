@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Loader2, Terminal } from "lucide-react"
 import { useRouter } from 'next/navigation';
-import { api } from "@/lib/utils";
 import { toast } from "sonner";
+import { api } from "@/helper/api";
 
 
 type FormData = {
