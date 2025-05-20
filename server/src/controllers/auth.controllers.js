@@ -76,9 +76,9 @@ const loginUser = async (req, res) => {
 
 
   const options = {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
+      httpOnly: true,
+      secure: true,
+      sameSite: "None"
   }
   
   return res
@@ -151,8 +151,16 @@ const refreshToken = async (req, res) => {
 
 // logout user
 const logoutUser = async (req, res) => {
-  res.clearCookie("refreshToken");
-  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken",{
+    httpOnly: true,
+    secure: true,
+    sameSite: "None"
+  });
+  res.clearCookie("accessToken",{
+    httpOnly: true,
+    secure: true,
+    sameSite: "None"
+  });
   res.json({ message: "user logout successfully" });
 };
 // logout user

@@ -41,8 +41,8 @@ const placeOrder = async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:3000/confirm?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: `https://shopsy1.vercel.app/confirm?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: "https://shopsy1.vercel.app/cancel",
       metadata: {
         userId: req.user.id.toString(),
         products: JSON.stringify(products),
