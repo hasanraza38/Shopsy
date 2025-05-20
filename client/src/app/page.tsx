@@ -72,7 +72,7 @@ const Home = () => {
     setIsLoading(true)
     try {
       const res = await api.get("/product/getallproducts")
-      console.log(res.data.products);
+      // console.log(res.data.products);
       setdata(res.data.products)
     } catch (error: any) {
       console.log(error);
