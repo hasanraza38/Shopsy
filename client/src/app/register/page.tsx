@@ -44,10 +44,10 @@ const Register = () => {
     setApiError(null)
 
     try {
-      // const file = data.avatar?.[0]
+      const file = data.avatar?.[0]
 
       const formData = new FormData()
-      // if (file) formData.append("avatar", file)
+      if (file) formData.append("avatar", file)
       formData.append("username", data.username)
       formData.append("email", data.email)
       formData.append("password", data.password)
