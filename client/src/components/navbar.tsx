@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,8 +12,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
   NavigationMenuViewport,
-} from "components/ui/navigation-menu"
-import { Button } from 'components/ui/button'
+} from "@/components/ui/navigation-menu"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -21,13 +21,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "components/ui/dialog";
-import { Label } from 'components/ui/label'
-import { Input } from 'components/ui/input'
-import { Textarea } from 'components/ui/textarea'
+} from "@/components/ui/dialog";
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { api, checkAuth, logOut } from 'helper/api'
+import { api, checkAuth, logOut } from '@/helper/api'
 import { Loader2 } from 'lucide-react'
 
 

@@ -1,14 +1,14 @@
 "use client"
-import { Button } from "components/ui/button"
-import { Input } from "components/ui/input"
-import { Label } from "components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Loader2, Terminal } from "lucide-react"
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
-import { api } from "helper/api";
+import { api } from "@/helper/api";
 
 
 type FormData = {

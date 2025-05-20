@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import { api } from "helper/api";
-import { Card, CardContent } from "components/ui/card";
-import { Button } from "components/ui/button";
+import { api } from "@/helper/api";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 
 
