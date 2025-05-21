@@ -58,7 +58,7 @@ const Login = () => {
          else if (error.response.status === 500) {
           setApiError("Server error. Please try again later")
         } else {
-          setApiError(error.response.data.message || "Registration failed. Please try again.")
+          setApiError(error.response.data.message || "Login failed. Please try again.")
         }
       } else if (error.request) {
         setApiError("No response from server. Please check your internet connection and try again later.")

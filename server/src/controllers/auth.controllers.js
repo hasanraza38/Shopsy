@@ -89,7 +89,6 @@ const loginUser = async (req, res) => {
     message: "user logged in successfuly",
   }
 )
-
 };
 // login User
 

@@ -2,7 +2,8 @@ import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 
 export const api = axios.create({
-  baseURL: 'https://shopsy-production-a855.up.railway.app/api/v1',
+  // baseURL: 'https://shopsy-production-a855.up.railway.app/api/v1',
+  baseURL: 'http://localhost:4000/api/v1',
   withCredentials: true
 });
 
