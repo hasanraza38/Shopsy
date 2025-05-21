@@ -11,30 +11,13 @@ import dashboardRoutes from "./src/routes/dashboard.routes.js";
 
 const app = express();
 const port = process.env.PORT;
-// const allowedOrigins = [
-//  "https://shopsy1.vercel.app/",
-// ];
+
+
 app.use(express.json());
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
-//     credentials: true, 
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization']
-//   })
-// );
-
-
 app.use(
   cors({
-    origin: "https://shopsy1.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );

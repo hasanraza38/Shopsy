@@ -140,6 +140,7 @@ const Navbar = () => {
       const response = await logOut();
       setUserLogout(prev => !prev)
       toast.success("Logout Successful");
+      window.location.reload();
       setUser(null);
     } catch (error:any) {
       console.error("error:", error.message);

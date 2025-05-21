@@ -139,7 +139,7 @@ const refreshToken = async (req, res) => {
       {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: 'None',
        });
     res.json({ message: 'Token refreshed' });
   });
